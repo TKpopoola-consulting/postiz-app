@@ -1,13 +1,20 @@
-# We want the docker builds to be clean, and as fast as possible. Don't send
-# any half-built stuff in the build context as a pre-caution (also saves copying
-# 180k files in node_modules that isn't used!).
+# Exclude node_modules to avoid sending unused dependencies in the build context
 **/node_modules
+
+# Exclude build output and temporary directories
 dist
 .nx
 .devcontainer
+
+# Exclude version control directories (e.g., git)
 **/.git
-**/dist
+
+# Exclude documentation and license files (optional)
 **/*.md
 **/LICENSE
+
+# Exclude npm debug logs (optional)
 **/npm-debug.log
-**/*.vscode
+
+# Exclude editor and IDE-specific files (optional)
+**/.vscode
