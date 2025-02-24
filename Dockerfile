@@ -30,6 +30,9 @@ COPY var/docker/supervisord /app/supervisord_available_configs/
 COPY var/docker/Caddyfile /app/Caddyfile
 COPY .env.example /config/postiz.env
 
+# Set executable permissions for the entrypoint script
+RUN chmod +x /app/entrypoint.sh
+
 # Declare volumes for persistent data/configuration
 VOLUME /config
 VOLUME /uploads
