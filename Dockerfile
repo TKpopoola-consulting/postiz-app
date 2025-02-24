@@ -1,17 +1,8 @@
 FROM node:18
-
-# Set the working directory
+ENV npm_config_audit=false
 WORKDIR /app
-
-# Copy the package.json and install dependencies
 COPY package*.json ./
-RUN npm install
-
-# Copy the rest of the application
+RUN npm install --legacy-peer-deps
 COPY . .
-
-# Expose the port your app runs on
-EXPOSE 3000
-
-# Run the application
+RUN npm run build
 CMD ["npm", "start"]
