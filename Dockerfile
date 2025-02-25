@@ -1,10 +1,3 @@
-# This Dockerfile is used for producing 3 container images:
-#   base         - A common base image with Node and basic infrastructure.
-#   devcontainer - Used for development; includes source code and node_modules.
-#   dist         - Used for production; contains the built source code and node_modules.
-
-ARG NODE_VERSION="20.17"
-
 # ------------------------------
 # Base Stage
 # ------------------------------
