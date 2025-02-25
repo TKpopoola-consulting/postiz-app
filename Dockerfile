@@ -95,8 +95,5 @@ VOLUME /uploads
 # Label the production image
 LABEL org.opencontainers.image.title="Postiz App (Production)"
 
-# The production image will use the production start script defined in package.json.
-# For example, if your package.json defines:
-#   "start:prod": "node dist/apps/backend/main.js"
-# then OpenShift should be configured to use that command.
+# Use the production start script defined in package.json (e.g., "start:prod": "node dist/apps/backend/main.js")
 CMD ["npm", "start:prod"]
