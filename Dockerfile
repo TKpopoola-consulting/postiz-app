@@ -1,8 +1,7 @@
-# This Dockerfile is used for producing 3 container images.
-#
-# base         - A common base image with Node and basic infrastructure.
-# devcontainer - Used for development; includes source code and node_modules.
-# dist         - Used for production; contains the built source code and node_modules.
+# This Dockerfile is used for producing 3 container images:
+#   base         - A common base image with Node and basic infrastructure.
+#   devcontainer - Used for development; includes source code and node_modules.
+#   dist         - Used for production; contains the built source code and node_modules.
 
 ARG NODE_VERSION="20.17"
 
@@ -57,12 +56,14 @@ RUN apk add --no-cache \
     make \
     build-base
 
-# Copy essential configuration files and source code
+# Copy essential configuration files and source code,
+# including build.plugins.js so it can be executed in the postinstall step.
 COPY nx.json tsconfig.base.json package.json package-lock.json build.plugins.js /app/
 COPY apps /app/apps/
 COPY libraries /app/libraries/
 
-# Install dependencies and build projects using Nx
+# Install dependencies and build projects using Nx.
+# This will run the postinstall scripts which call "node build.plugins.js"
 RUN npm ci --no-fund --legacy-peer-deps && \
     npm run update-plugins && \
     npx nx run-many --target=build --projects=frontend,backend,workers,cron
@@ -95,5 +96,7 @@ VOLUME /uploads
 # Label the production image
 LABEL org.opencontainers.image.title="Postiz App (Production)"
 
-# Use the production start script defined in package.json (e.g., "start:prod": "node dist/apps/backend/main.js")
+# Use the production start script defined in package.json 
+# (for example, "start:prod": "node dist/apps/backend/main.js")
 CMD ["npm", "start:prod"]
+
